@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RHYTHM Manual</title>
+  <meta name="description" content="Single-file RHYTHM manual.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #222222;
+      --line: #111111;
+      --soft: #f2f2f2;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; line-height: 1.55; }
+    a { color: inherit; }
+    .page { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; padding: 24px 0 48px; }
+    .topbar { position: sticky; top: 0; z-index: 20; border: 2px solid var(--line); padding: 14px 20px; margin-bottom: 20px; background: #fff; }
+    .brand { margin: 0 0 12px; font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+    .nav-inline { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .nav-inline a { border: 1px solid var(--line); padding: 8px 10px; text-decoration: none; background: #fff; }
+    .content { display: grid; gap: 22px; }
+    h1, h2, h3 { margin: 0; line-height: 1.1; }
+    h1 { font-size: clamp(2.1rem, 4vw, 3.6rem); margin-bottom: 12px; }
+    h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); margin-bottom: 14px; }
+    h3 { font-size: 1.1rem; margin-bottom: 10px; text-transform: none; }
+    p { margin: 0 0 14px; color: var(--muted); }
+    ul, ol { margin: 0 0 16px 20px; padding: 0; }
+    li { margin: 0 0 8px; }
+    .hero { border: 2px solid var(--line); padding: 28px; margin-bottom: 28px; }
+    .hero p:last-child { margin-bottom: 0; }
+    .eyebrow { margin: 0 0 10px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+    .section { border: 2px solid var(--line); padding: 24px; }
+    .section-header { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .callout { border-left: 4px solid var(--line); padding: 12px 14px; background: var(--soft); margin: 14px 0; }
+    .checklist { list-style: square; }
+    .guide-figure { margin: 18px 0 8px; }
+    .guide-figure img { width: 100%; display: block; border: 2px solid #000; background: #000; }
+    .caption { margin: 8px 0 0; font-size: 0.92rem; color: var(--muted); }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .footer { border-top: 2px solid var(--line); margin-top: 24px; padding-top: 18px; font-size: 0.95rem; }
+    .mono { font-family: "Courier New", Courier, monospace; }
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, var(--max)); padding: 16px 0 36px; }
+      .topbar, .hero, .section { padding: 16px; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      @page {
+        size: auto;
+        margin: 0.5in;
+      }
+
+      html, body {
+        background: #fff !important;
+      }
+
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .topbar {
+        position: static;
+      }
+
+      .nav-inline {
+        display: none;
+      }
+
+      .hero,
+      .section,
+      .panel,
+      .view-block {
+        box-shadow: none;
+      }
+
+      .hero,
+      .panel {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .panel:last-of-type {
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .view-block {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        break-before: page;
+        page-break-before: always;
+      }
+
+      .view-block:first-of-type {
+        break-before: page;
+        page-break-before: always;
+      }
+
+      .guide-figure,
+      .image-stack,
+      .view-meta,
+      .lists {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .view-meta,
+      .lists,
+      .two-col,
+      .mode-grid,
+      .nav-inline {
+        display: block !important;
+      }
+
+      .image-stack > *,
+      .lists > *,
+      .two-col > *,
+      .mode-grid > * {
+        margin-bottom: 14px;
+      }
+
+      .screen-shot,
+      .button-shot {
+        width: 256px;
+        max-width: 100%;
+      }
+    }
+
+  
+    .mode-section {
+      scroll-margin-top: 64px;
+    }
+    .mode-section + .mode-section {
+      margin-top: 24px;
+    }
+    .mode-intro {
+      border: 2px solid var(--line);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    .mode-intro h1,
+    .mode-intro h2 {
+      margin-bottom: 10px;
+    }
+    @media print {
+      .mode-section {
+        break-before: page;
+        page-break-before: always;
+      }
+      .mode-section:first-of-type {
+        break-before: auto;
+        page-break-before: auto;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <p class="brand">RHYTHM • MANUAL</p>
+      <div class="nav-inline">
+        <a href="#quickstart">Quickstart Guide</a>
+        <a href="#pattern">Pattern</a>
+        <a href="#track">Track</a>
+        <a href="#mixer">Mixer</a>
+        <a href="#song">Song</a>
+        <a href="#scope">Scope</a>
+        <a href="#sample-pool">Sample Pool</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#settings">Settings</a>
+      </div>
+    </header>
+    <main class="content">
+      <section id="quickstart" class="mode-section">
+<section class="hero">
+        <h1>Power on. Make a beat. Save something real.</h1>
+        <p>
+          RHYTHM is a compact hardware groovebox for building beats, patterns, and song ideas fast with a tactile,
+          hands-on workflow. This guide is tuned for a first successful session: power on, load sounds, program a
+          pattern, build a variation, chain it into a song, and save your work.
+        </p>
+        <div class="callout">
+          <strong>First-run goal:</strong> By the end of this guide, a new user should be able to create a session,
+          load sounds, start playback, program a simple pattern, add variation, chain patterns into a song, and save.
+        </div>
+      </section>
+      <section class="section" id="before-you-start">
+          <div class="section-header">
+            <h2>Before You Start</h2>
+          </div>
+          <h3>What you need</h3>
+          <ul class="checklist">
+            <li>RHYTHM with included Micro SD card with samples</li>
+            <li>USB-C power</li>
+            <li>Headphones, speakers, or a mixer connected to audio out</li>
+          </ul>
+          <figure class="guide-figure">
+            <img src="images/rhythm-front-view.jpg" alt="Placeholder image for RHYTHM front view and connections.">
+            <figcaption class="caption">Suggested final image: front/top product view with power, audio, and SD locations called out.</figcaption>
+          </figure>
+        </section>
+
+        <section class="section" id="getting-familiar">
+          <div class="section-header">
+            <h2>Getting Familiar with RHYTHM</h2>
+          </div>
+          <div class="two-col">
+            <div>
+              <h3>Display</h3>
+              <ul>
+                <li>Mode name and view name</li>
+                <li>Play/Stop indicator</li>
+                <li>Current Pattern (example: P01)</li>
+                <li>Sequencer position</li>
+                <li>Parameters for the current view</li>
+                <li>Current Track (example: T1)</li>
+                <li>BPM</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Transport</h3>
+              <ul>
+                <li>Left and Right move through views</li>
+                <li>Hold Function + Left = Play / Stop</li>
+                <li>Hold Function + Right = Select Pattern with Button Grid</li>
+              </ul>
+              <h3>Button Grid</h3>
+              <ul>
+                <li>Buttons serve different purposes depending on the current mode</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="guide-figure">
+            <img src="images/display-controls-overview.jpg" alt="Placeholder image for RHYTHM display and controls overview.">
+            <figcaption class="caption">Suggested final image: labeled screenshot or annotated device photo showing display zones and core controls.</figcaption>
+          </figure>
+
+          <h3>Power On</h3>
+          <ol>
+            <li>Connect audio out to headphones, speakers, or a mixer.</li>
+            <li>Connect USB-C power.</li>
+            <li>Turn RHYTHM on with the power switch on the left side.</li>
+          </ol>
+          <p>When startup completes, RHYTHM opens in Pattern mode, Grid view, and is ready to use.</p>
+
+          <h3>Moving around the user interface</h3>
+          <ul>
+            <li>Press Left or Right to cycle through views in the current mode.</li>
+            <li>Hold Function and press grid buttons 1-8 to select tracks.</li>
+            <li>Hold Function and press grid buttons 9-16 to change modes.</li>
+            <li>The Encoder can edit values, scroll views, and confirm actions.</li>
+          </ul>
+
+          <h3>Editing values</h3>
+          <ul>
+            <li>Turn the encoder to move through the parameters shown on the right side of the screen.</li>
+            <li>Press the encoder to select a parameter.</li>
+            <li>Turn the encoder to change the selected value.</li>
+            <li>Press the encoder again to deselect it.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="new-session">
+          <div class="section-header">
+            <h2>Step 1 — Create a New Session</h2>
+          </div>
+          <ol>
+            <li>Hold Function and press the <span class="mono">SESS</span> (Session) button.</li>
+            <li>Press Right until you reach <strong>SESSION FILE</strong> view.</li>
+            <li>Use the encoder to select <strong>NEW</strong> and press the encoder.</li>
+            <li>Confirm <strong>YES</strong>.</li>
+          </ol>
+          <figure class="guide-figure">
+            <img src="images/session-file-new.jpg" alt="Placeholder screenshot for session file new flow.">
+          </figure>
+        </section>
+
+        <section class="section" id="first-pattern">
+          <div class="section-header">
+            <h2>Make Your First Pattern</h2>
+          </div>
+
+          <h3>Step 2 — Load Sound</h3>
+          <ol>
+            <li>Hold Function and press the <span class="mono">SMPL</span> (Sample Pool) button.</li>
+            <li>Use Left / Right buttons to select your sample slot (1-32).</li>
+            <li>Use Encoder to select <strong>LOAD</strong> and press the encoder.</li>
+            <li>Use Encoder to scroll through the sample list.</li>
+            <li>Press Encoder to load / preview a sample or open a folder.</li>
+            <li>Select <strong>[BACK]</strong> if needed and then <strong>[EXIT]</strong> to complete the loading process.</li>
+          </ol>
+          <figure class="guide-figure">
+            <img src="images/sample-pool-load-screen.jpg" alt="Placeholder screenshot for sample pool load screen.">
+          </figure>
+
+          <h3>Step 3 — Select a track and choose a sound</h3>
+          <ol>
+            <li>Hold Function and press the <span class="mono">TRCK</span> (Track) button.</li>
+            <li>Hold Function and press one of track buttons <strong>T1-T8</strong> to select a track.</li>
+            <li>Use Left / Right to go to the <strong>TRACK ENGINE</strong> view.</li>
+            <li>Use the encoder to select <strong>SND</strong>.</li>
+            <li>Press the Encoder to change the <strong>SND</strong> value to the sound you want.</li>
+          </ol>
+
+          <h3>Step 4 — Start the Sequencer</h3>
+          <ol>
+            <li>Hold Function and press the Left / Play transport button.</li>
+          </ol>
+
+          <h3>Step 5 — Program a Pattern</h3>
+          <ol>
+            <li>Hold Function and press the <span class="mono">PTRN</span> (Pattern) button.</li>
+            <li>Hold Function and press one of track buttons <strong>T1-T8</strong> to select the track you want to program.</li>
+            <li>Use Left / Right to select <strong>Grid</strong> view.</li>
+            <li>Press grid buttons to add or remove notes.</li>
+            <li>Adjust note, velocity, and length with the Encoder.</li>
+          </ol>
+          <div class="callout">
+            Repeat steps 2 through 5 for each sound you want to add.
+          </div>
+          <figure class="guide-figure">
+            <img src="images/grid-view-active-steps.jpg" alt="Placeholder screenshot for grid view with active steps.">
+          </figure>
+        </section>
+
+        <section class="section" id="pattern-variation">
+          <div class="section-header">
+            <h2>Choose Another Pattern</h2>
+          </div>
+          <ol>
+            <li>Hold Function and press the Right / Pattern transport button.</li>
+            <li>The Button Grid will indicate what Pattern is currently selected.</li>
+            <li>Select grid buttons 1-16 to choose a different pattern.</li>
+          </ol>
+          <div class="callout">
+            Repeat the programming step for each sound you want to add to the chosen pattern.
+          </div>
+        </section>
+
+        <section class="section" id="song-chain">
+          <div class="section-header">
+            <h2>Build a Simple Song Chain</h2>
+          </div>
+          <ol>
+            <li>Hold Function and press the <span class="mono">SONG</span> button to enter Song mode.</li>
+            <li>Press Left to switch the sequencer play mode between <strong>PTN</strong> and <strong>SNG</strong>.</li>
+            <li>Set the play mode to <strong>SNG</strong>.</li>
+            <li>Use the encoder to scroll through song steps.</li>
+            <li>For each song step, choose which pattern should play there by holding Function + Right / Pattern and pressing the Grid button of the pattern you want.</li>
+          </ol>
+
+          <h3>Song mode basics</h3>
+          <ul>
+            <li>In <strong>SNG</strong> mode, RHYTHM plays song steps in sequence.</li>
+            <li>Press Right to toggle loop ON or OFF.</li>
+            <li>The end of the song is the first step without a pattern assigned.</li>
+            <li>If loop is ON, the song repeats.</li>
+            <li>If loop is OFF, playback stops at the end.</li>
+            <li>Grid buttons 1-8 control song-step track on/off.</li>
+            <li>Grid buttons 9-16 control mutes.</li>
+          </ul>
+          <figure class="guide-figure">
+            <img src="images/song-mode-chain-view.jpg" alt="Placeholder screenshot for song mode chain view.">
+          </figure>
+        </section>
+
+        <section class="section" id="save-session">
+          <div class="section-header">
+            <h2>Save Your Session</h2>
+          </div>
+          <ol>
+            <li>Hold Function and press the <span class="mono">SESS</span> (Session) button.</li>
+            <li>Press Left or Right until you reach <strong>FILE</strong>.</li>
+            <li>Use the encoder to choose <strong>SAVE</strong>.</li>
+            <li>Press the encoder to open name entry.</li>
+            <li>Enter a name by selecting characters.</li>
+            <li>Choose <strong>SAVE</strong> and press Encoder.</li>
+          </ol>
+        </section>
+
+        <section class="section" id="load-session">
+          <div class="section-header">
+            <h2>Load a Session</h2>
+          </div>
+          <ol>
+            <li>Hold Function and press the <span class="mono">SESS</span> (Session) button.</li>
+            <li>Press Left or Right until you reach <strong>FILE</strong>.</li>
+            <li>Choose <strong>OPEN</strong>.</li>
+            <li>Use the encoder to select a saved session.</li>
+            <li>Press the encoder to load it.</li>
+          </ol>
+          <div class="callout">
+            If you power off without saving, unsaved changes are lost.
+          </div>
+        </section>
+
+        <section class="section" id="troubleshooting">
+          <div class="section-header">
+            <h2>Troubleshooting</h2>
+          </div>
+          <ul>
+            <li><strong>No sound:</strong> Confirm audio is connected.</li>
+            <li><strong>Sample track silent:</strong> Confirm the Micro SD card is inserted and samples are loaded in Sample Pool.</li>
+            <li><strong>Song playback not changing step:</strong> Confirm the play mode is set to <strong>SNG</strong> instead of <strong>PTN</strong>.</li>
+            <li><strong>Work disappeared:</strong> Save the session before powering off.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="support">
+          <div class="section-header">
+            <h2>Support</h2>
+          </div>
+          <p><strong>Web:</strong> <a href="https://zeroneng.com">https://zeroneng.com</a></p>
+          <p><strong>Discord:</strong> <a href="https://discord.gg/RzFStZty4">https://discord.gg/RzFStZty4</a></p>
+        </section>
+</section><section id="pattern" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Pattern Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM pattern mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Pattern</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Pattern — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/pattern-screen-placeholder.svg" alt="Placeholder Pattern mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Pattern mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/pattern-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Pattern — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/pattern-screen-placeholder.svg" alt="Placeholder Pattern mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Pattern mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/pattern-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Pattern — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/pattern-screen-placeholder.svg" alt="Placeholder Pattern mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Pattern mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/pattern-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Pattern — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/pattern-screen-placeholder.svg" alt="Placeholder Pattern mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Pattern mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/pattern-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Pattern — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/pattern-screen-placeholder.svg" alt="Placeholder Pattern mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Pattern mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/pattern-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="track" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Track Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM track mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Track</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Track — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/track-screen-placeholder.svg" alt="Placeholder Track mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Track mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/track-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Track — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/track-screen-placeholder.svg" alt="Placeholder Track mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Track mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/track-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Track — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/track-screen-placeholder.svg" alt="Placeholder Track mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Track mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/track-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Track — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/track-screen-placeholder.svg" alt="Placeholder Track mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Track mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/track-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Track — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/track-screen-placeholder.svg" alt="Placeholder Track mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Track mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/track-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="mixer" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Mixer Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM mixer mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Mixer</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Mixer — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/mixer-screen-placeholder.svg" alt="Placeholder Mixer mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Mixer mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/mixer-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Mixer — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/mixer-screen-placeholder.svg" alt="Placeholder Mixer mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Mixer mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/mixer-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Mixer — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/mixer-screen-placeholder.svg" alt="Placeholder Mixer mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Mixer mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/mixer-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Mixer — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/mixer-screen-placeholder.svg" alt="Placeholder Mixer mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Mixer mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/mixer-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Mixer — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/mixer-screen-placeholder.svg" alt="Placeholder Mixer mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Mixer mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/mixer-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="song" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Song Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM song mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Song</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Song — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/song-screen-placeholder.svg" alt="Placeholder Song mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Song mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/song-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Song — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/song-screen-placeholder.svg" alt="Placeholder Song mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Song mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/song-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Song — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/song-screen-placeholder.svg" alt="Placeholder Song mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Song mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/song-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Song — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/song-screen-placeholder.svg" alt="Placeholder Song mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Song mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/song-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Song — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/song-screen-placeholder.svg" alt="Placeholder Song mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Song mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/song-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="scope" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Scope Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM scope mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Scope</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Scope — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/scope-screen-placeholder.svg" alt="Placeholder Scope mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Scope mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/scope-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Scope — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/scope-screen-placeholder.svg" alt="Placeholder Scope mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Scope mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/scope-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Scope — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/scope-screen-placeholder.svg" alt="Placeholder Scope mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Scope mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/scope-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Scope — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/scope-screen-placeholder.svg" alt="Placeholder Scope mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Scope mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/scope-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Scope — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/scope-screen-placeholder.svg" alt="Placeholder Scope mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Scope mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/scope-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="sample-pool" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Sample Pool Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM sample pool mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Sample Pool</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Sample Pool — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/sample-pool-screen-placeholder.svg" alt="Placeholder Sample Pool mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Sample Pool mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/sample-pool-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Sample Pool — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/sample-pool-screen-placeholder.svg" alt="Placeholder Sample Pool mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Sample Pool mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/sample-pool-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Sample Pool — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/sample-pool-screen-placeholder.svg" alt="Placeholder Sample Pool mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Sample Pool mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/sample-pool-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Sample Pool — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/sample-pool-screen-placeholder.svg" alt="Placeholder Sample Pool mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Sample Pool mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/sample-pool-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Sample Pool — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/sample-pool-screen-placeholder.svg" alt="Placeholder Sample Pool mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Sample Pool mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/sample-pool-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="calculator" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Calculator Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM calculator mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Calculator</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Calculator — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/calculator-screen-placeholder.svg" alt="Placeholder Calculator mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Calculator mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/calculator-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Calculator — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/calculator-screen-placeholder.svg" alt="Placeholder Calculator mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Calculator mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/calculator-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Calculator — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/calculator-screen-placeholder.svg" alt="Placeholder Calculator mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Calculator mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/calculator-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Calculator — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/calculator-screen-placeholder.svg" alt="Placeholder Calculator mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Calculator mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/calculator-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Calculator — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/calculator-screen-placeholder.svg" alt="Placeholder Calculator mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Calculator mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/calculator-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section><section id="settings" class="mode-section">
+<section class="mode-intro">
+          <div class="panel-header">
+            <h1>Settings Mode</h1>
+          </div>
+          <p>Reference page for RHYTHM settings mode with five placeholder view sections ready for screenshots, instructions, and notes.</p>
+        </section>
+<section class="panel"><div class="panel-header"><h2>Views</h2></div><p>This page covers <strong>Settings</strong> mode. Use the view anchors below to jump directly to the section you want to document.</p><ul class="anchor-list"><li><a href="#view-1">View 1</a></li><li><a href="#view-2">View 2</a></li><li><a href="#view-3">View 3</a></li><li><a href="#view-4">View 4</a></li><li><a href="#view-5">View 5</a></li></ul></section><section class="view-block" id="view-1">
+  <div class="panel-header">
+    <h2>Settings — View 1</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/settings-screen-placeholder.svg" alt="Placeholder Settings mode screen image for view 1.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Settings mode, View 1.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/settings-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-2">
+  <div class="panel-header">
+    <h2>Settings — View 2</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/settings-screen-placeholder.svg" alt="Placeholder Settings mode screen image for view 2.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Settings mode, View 2.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/settings-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-3">
+  <div class="panel-header">
+    <h2>Settings — View 3</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/settings-screen-placeholder.svg" alt="Placeholder Settings mode screen image for view 3.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Settings mode, View 3.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/settings-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-4">
+  <div class="panel-header">
+    <h2>Settings — View 4</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/settings-screen-placeholder.svg" alt="Placeholder Settings mode screen image for view 4.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Settings mode, View 4.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/settings-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="view-block" id="view-5">
+  <div class="panel-header">
+    <h2>Settings — View 5</h2>
+  </div>
+  <div class="view-meta">
+    <div class="image-stack">
+      <figure class="guide-figure">
+        <img class="screen-shot" src="images/settings-screen-placeholder.svg" alt="Placeholder Settings mode screen image for view 5.">
+      <figcaption class="caption">Replace this with a real 128x64 screenshot for Settings mode, View 5.</figcaption>
+    </figure>
+      <figure class="guide-figure">
+        <img class="screen-shot button-shot" src="images/settings-buttons-placeholder.svg" alt="Placeholder button map for this view.">
+        <figcaption class="caption">Replace with a button/function map for this view.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <p>Use this section to document what this view does, what the user sees, and how the controls behave.</p>
+      <div class="lists">
+        <div>
+          <h3>Numbered Steps</h3>
+          <ol>
+            <li>Placeholder step for entering or using this view.</li>
+            <li>Placeholder step for selecting, editing, or confirming values.</li>
+            <li>Placeholder step for exiting, saving, or moving onward.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Bullet Notes</h3>
+          <ul>
+            <li>Placeholder note about controls or navigation.</li>
+            <li>Placeholder note about what appears on screen.</li>
+            <li>Placeholder note about common use or behavior.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="panel footer-note"><p>Replace placeholder screen images in the shared <code>images/</code> folder as real screenshots become available.</p></section>
+</section>
+    </main>
+  </div>
+</body>
+</html>
